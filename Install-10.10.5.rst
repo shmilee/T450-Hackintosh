@@ -387,37 +387,28 @@ T440p is better with the information of time and capacity.
 TODO:
     Read this `battery status guide`_. Edit the battery patch, adding the ``sleep code``.
 
-Following is the information of Batteries.
+
+Applications
+============
+
+brew
+-----
 
 .. code:: bash
 
-    Handle 0x0027, DMI type 22, 26 bytes
-    Portable Battery
-    	Location: Front
-    	Manufacturer: SANYO
-    	Name: 45N1773
-    	Design Capacity: 23200 mWh
-    	Design Voltage: 11100 mV
-    	SBDS Version: 03.01
-    	Maximum Error: Unknown
-    	SBDS Serial Number: 2D3B
-    	SBDS Manufacture Date: 2015-04-03
-    	SBDS Chemistry: LION
-    	OEM-specific Information: 0x00000000
-    
-    Handle 0x0028, DMI type 22, 26 bytes
-    Portable Battery
-    	Location: Rear
-    	Manufacturer: SANYO
-    	Name: 45N1767
-    	Design Capacity: 47520 mWh
-    	Design Voltage: 10800 mV
-    	SBDS Version: 03.01
-    	Maximum Error: Unknown
-    	SBDS Serial Number: 06BA
-    	SBDS Manufacture Date: 2015-03-24
-    	SBDS Chemistry: LION
-    	OEM-specific Information: 0x00000000
+    sudo xcode-select --install
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+oh-my-zsh
+----------
+
+.. code:: bash
+
+    git clone http://222.205.57.208/cgit/oh-my-zsh-custom
+
+
+
+
 
 
 
