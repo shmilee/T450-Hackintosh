@@ -404,6 +404,7 @@ oh-my-zsh
 
 .. code:: bash
 
+    sudo scutil --set HostName osx-T450
     git clone http://222.205.57.208/cgit/oh-my-zsh-custom
 
 
