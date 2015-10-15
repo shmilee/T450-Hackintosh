@@ -33,6 +33,8 @@ According to the logo icns of your themes, make a new png os_cap.png from Produc
 Upload os_cap.png to http://www.easyicon.net/language.en/covert/, and save as ``os_cap.icns``.
 Copy it to the themes directory.
 
+Use ``config-mbp121.plist``.
+
 Install Image
 -------------
 
@@ -64,4 +66,26 @@ Graphics HD5500
 The recommended and easier way is to modify EFI/Clover/config.plist.
 Find key: ``KextsToPatch``, string: Disable minStolenSize ... 10.11.x ...,
 key: ``name``, string: disabled:AppleIntelBDWGraphicsFramebuffer, and remove ``disabled:``.
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Beta version kernel panic!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Wait 6 months!!!!!!!!!!!!!!
+
+Boot Screen Garble
+------------------
+
+Modify EFI/Clover/config.plist.
+Find key: ``KextsToPatch``, string: Boot graphics glitch, 10.10.x/10.11.x ...,
+remove ``disabled:``.
+
+SSDT & DSDT
+------------
+
+Same as 10.10.5
+
+USB 3.0
+-------
+
+!!!!!!!!!!!!!Camera doesn't work!!!!!!!!!!!!!!!!!!!!!!Wait 6 months!!!!!!!!!!!!!!
+
+Applications
+============
+
+Same as 10.10.5
+
