@@ -1,0 +1,10 @@
+~
+README-article.pdf
+clover/Clover-*.iso*
+DSDT/Laptop-DSDT-Patch*.zip
+DSDT/RehabMan-MaciASL*.zip
+DSDT/T450-20BV-A00YCD.ioreg
+HD5500-method2.2/*
+!HD5500-method2.2/Readme.md
+programs/Clover*app.zip
+programs/PlistEditPro*.zip
