@@ -223,7 +223,7 @@
 				<key>Comment</key>
 				<string>Disable minStolenSize less or equal fStolenMemorySize assertion, 10.11.beta ( (based on Austere.J patch)</string>
 				<key>Name</key>
-				<string>disabled:AppleIntelBDWGraphicsFramebuffer</string>
+				<string>AppleIntelBDWGraphicsFramebuffer</string>
 				<key>Find</key>
 				<data>QTnEdj4=</data>
 				<key>Replace</key>
