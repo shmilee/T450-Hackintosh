@@ -1,6 +1,6 @@
-:Title: Install Yosemite 10.10.5 on Thinkpad T450 20BV-A00YCD
+:Title: Install Hackintosh on Thinkpad T450 20BV-A00YCD
 :Author: Shmilee
-:Date: 2015-08-28
+:Date: 2015-11-02
 
 .. raw:: latex
 
@@ -23,7 +23,7 @@ Ethernet: Intel I218-V
 
 WLAN: Intel 7265
 
-Specifically, this is only the history and notes of my Yosemite installation.
+Specifically, this is only the history and notes of my Hackintosh installation.
 Here is my gpt disk partition table:
 
 =========  ========= ========= =========  ==== ====================
@@ -34,22 +34,29 @@ Device         Start       End   Sectors  Size Type
 /dev/sda3   42993664 105908223  62914560   30G Apple HFS/HFS+
 /dev/sda4  105908224 189794303  83886080   40G Microsoft basic data
 /dev/sda5  189794304 441452543 251658240  120G Microsoft basic data
-/dev/sda6  441452544 959449087 517996544  247G Linux filesystem
-/dev/sda7  959449088 976773134  17324047  8.3G Apple HFS/HFS+
+/dev/sda6  441452544 902825983 461373440  220G Linux filesystem
+/dev/sda7  902825984 959449087  56623104   27G Microsoft basic data
+/dev/sda8  959449088 976773134  17324047  8.3G Apple boot
 =========  ========= ========= =========  ==== ====================
 
-I have upgraded the BIOS version to 1.15_,
+I have upgraded the BIOS version to 1.18_,
 and installed Archlinux on ``/dev/sda2``, Windows 8.1 on ``/dev/sda4``.
-Device ``/dev/sda3`` is reserved for Yosemite, and ``/dev/sda7`` is used to restore Yosemite Install dmg.
+``/dev/sda7`` is used to share data between linux osx and win.
+Device ``/dev/sda3`` is reserved for Hackintosh, and ``/dev/sda8`` is used to restore Hackintosh Install dmg.
 
 
 Prepare
 ========
 
+Hackintosh, OS version: Yosemite(10.10.5) or El Capitan(10.11.1)
+
 Install Clover
 --------------
 
 Download `Clover Bootable ISO`_, extract archive and find the Clover-\*-X64.iso file.
+
+Note:
+    10.11.1 requires Clover v3292 or later.
 
 Download driver HFSPlus.efi_.
 
@@ -67,7 +74,6 @@ In Archlinux, mount Clover-\*-X64.iso, and mount `ESP` on `/boot`, then copy fil
         CLOVERX64.efi \
         config.plist \
         -exec install -D {} /boot/EFI/Clover/{} \;
-    install /boot/EFI/Clover/CLOVERX64.efi /boot/EFI/boot/bootx64.efi
     # drivers
     cd <Download dir>/
     install HFSPlus.efi /boot/EFI/Clover/drivers64UEFI/HFSPlus-64.efi
@@ -79,21 +85,35 @@ In Archlinux, mount Clover-\*-X64.iso, and mount `ESP` on `/boot`, then copy fil
     find . -exec install -D {} /boot/EFI/Clover/themes/minimal/{} \;
     cd MavericksLogin
     find . -exec install -D {} /boot/EFI/Clover/themes/MavericksLogin/{} \;
+    # remove .DS_Store
+    find /boot/EFI/Clover/ -name '.DS_Store' -exec rm -vi {} \;
+    # chainloader in grub2
+    install /boot/EFI/Clover/CLOVERX64.efi /boot/EFI/boot/bootx64.efi
+    # add efi bootolder
+    efibootmgr -c -L 'Mac OS X' -d /dev/sda -p 1 -l \\EFI\\Clover\\CLOVERX64.efi
 
-.. find /boot/EFI/Clover/ -name '.DS_Store' -exec rm -vi {} \;
+Make El Capitan icon for clover theme. First, Get the ProductPageIcon from BaseSystem.dmg.
+
+.. code:: bash
+
+    $ cp /Volumes/OS\ X\ Base\ System/Install\ OS\ X\ El\ Capitan.app/\
+    > Contents/Resources/ProductPageIcon_512x512.tiff ./
+
+According to the logo icns of theme MavericksLogin, make a new png os_cap.png from ProductPageIcon.
+Upload os_cap.png to http://www.easyicon.net/language.en/covert/, and save as ``os_cap.icns``.
+Copy it to the themes directory.
 
 Config for T450
 ---------------
 
 Download `config.plist`_ for Hd5500 from RehabMan's github repository OS-X-Clover-Laptop-Config_.
 Then copy it to ``/boot/EFI/Clover/config.plist``, change the ScreenResolution, Theme, Timeout,
-and set ``GUI -> Scan -> Legacy`` to ``false``. Make sure the ``ig-platform-id`` is ``0x16160002``.
+add CPU Frequency, and set ``GUI -> Scan -> Legacy`` to ``false``. 
+Make sure the ``ig-platform-id`` is ``0x16160002``. 
+Enable KextsToPatch: ``Disable minStolenSize`` for 10.10.x and 10.11.x, ``Boot graphics glitch``.
+Change ``SMBIOS``, MacBookPro12,1 and add SerialNumber C02[XXXXX(replace 5X)]FVH3.
 
-.. code:: bash
-
-    mv /boot/EFI/Clover/{config.plist,config.plist.default}
-    install config_HD5300_5500_6000.plist /boot/EFI/Clover/config.plist
-    sed -i -e 's/1920x1080/1366x768/' -e 's/Bluemac/MavericksLogin/' /boot/EFI/Clover/config.plist
+Save the changed config.plist as ``config-mbp121.plist``.
 
 Download kexts.
 
@@ -125,32 +145,42 @@ Download kexts.
 
 * AppleIntelE1000e.kext.zip_, for Ethernet controller.
 
-.. * GenericUSBXHCI.kext
-
-Install the kexts to /boot/EFI/Clover/kexts/10.10/
-
 .. code:: bash
 
+    # add config.plist
+    cp /boot/EFI/Clover/{config.plist,config.plist.default}
+    install config-mbp121.plist /boot/EFI/Clover/config.plist
+    # Install the kexts for 10.10.x
     mv /boot/EFI/Clover/kexts/{Other,10.10}
     # add VoodooHDA.kext
     # add VoodooPS2Controller_X1Carbon.kext
     # add AppleIntelE1000e.kext
+    # Install the kexts for 10.11.x
+    cp -r /boot/EFI/Clover/kexts/{10.10,10.11}
 
 
 Install Image
 -------------
 
-Download ``Yosemite Install(14F27).cdr`` from this thread [1]_.
-Restore it to ``/dev/sda7``. Convert cdr to dmg, a compressed disk image.
+Download Yosemite 10.10.5 (14F27) InstallESD.dmg (MD5:ff4850735fa0a0a1d706edd21f133ef2) or
+El Capitan 10.11.1 (15B42) InstallESD.dmg (MD5:3332a4e05713366343e03ee6777c3374).
+
+Restore BaseSystem.dmg to ``/dev/sda8``.  Rename the label of sda7 to ``InstallMac``.
+Renmove link file ``/Volumes/InstallMac/System/Installation/Packages``.
+Copy ``/Volumes/OS X Install ESD/Packages`` to ``/Volumes/InstallMac/System/Installation/Packages``.
+Copy BaseSystem.dmg and BaseSystem.chunklist from ``/Volumes/OS X Install ESD`` to ``/Volumes/InstallMac``.
+
+.. copy mbr/OSInstaller to System/Library/PrivateFrameworks/OSInstaller.framework/Versions/A/
+.. copy mbr/OSInstal.mpkg to System/Installation/Packages/
 
 
-Install OS X Yosemite
-=====================
+Install MAC OS X
+================
 
-Reboot, enter clover, install Yosemite to ``/dev/sda3``.
+Reboot, enter clover, install Yosemite or El Capitan to ``/dev/sda3``.
 
-If an error of AppleIntelBDWGraphicsFramebuffer [2]_ occurs to you,
-please set graphics fakeid = 0x16160002. [3]_
+If an kernel error about AppleIntelBDWGraphicsFramebuffer occurs to you,
+please set graphics fakeid = 0x16160002.
 
 Hint:
   In clover screen, Options -> Graphics Injector menu -> FakeID.
@@ -170,7 +200,7 @@ There are 2 ways to deal with ``DVMT pre-allocated memory`` in BIOS.
 But as `guide page 20`_ and `guide page 28`_ said, STEP 2.2 (grub shell and setup_var) is not working here.
 The "Security: <guid>" things may lock these options to keep people from changing them.
 
-Here is what I get from BIOS 1.15 rom.
+Here is what I get from BIOS 1.18 rom.
 
 .. code::
 
@@ -192,36 +222,26 @@ Here is what I get from BIOS 1.15 rom.
 So, we have to patch the AppleIntelBDWGraphicsFramebuffer binary file in
 /S/L/E/AppleIntelBDWGraphicsFramebuffer.kext/Contents/MacOS/.
 
-We can use app:HexFiend, Find 39CF763C and replace it with 39CF773C.
+Use app:HexFiend, find 39CF763C and replace it with 39CFEB3C for 10.10.x,
+replace 4139c4763e00 with 4139c4eb3e00 for 10.11.x.
+
+Note:
+    The hexadecimal digits are get by ``echo -n Oc92PA== | base64 -d | hexdump``,
+    string Oc92PA== read from config-mbp121.plist.
+
 Do not forget to ``fix`` the kext's permissions. Othewise, you may get an error said:
 
 .. code::
 
     Graphics driver failed to load: could not register with Framebuffer driver!
 
-The recommended and easier way is to modify EFI/Clover/config.plist.
-Find key: ``KextsToPatch``, string: Disable minStolenSize ... 10.10.x ...,
-key: ``name``, string: disabled:AppleIntelBDWGraphicsFramebuffer, and remove ``disabled:``.
+The recommended and easier way is just to modify EFI/Clover/config.plist,
+which is already done by config-mbp121.plist.
 
 Boot Screen Garble
 ------------------
 
-For OS X 10.10.2 - 10.10.5,add the following patch to config.plist under ``KextsToPatch``. [4]_
-
-.. code::
-
-    <dict>
-        <key>Comment</key>
-        <string>Bootloader Graphics - Second Stage Patch</string>
-        <key>Find</key>
-        <data>QYjE6xE=</data>
-        <key>Name</key>
-        <string>IOGraphicsFamily</string>
-        <key>Replace</key>
-        <data>QYjE6zE=</data>
-    </dict>
-
-Another way is to enable Legacy Support in BIOS settings. (Ref: Issues in `guide for Intel HD Graphics 5500`_)
+Enable KextsToPatch ``Boot graphics glitch``, which is already done by config-mbp121.plist.
 
 SSDT for PM
 -----------
@@ -232,7 +252,7 @@ We'd better download the `latest Beta branch`_.
 Run ``./ssdtPRGen.sh``, copy ~/Library/ssdtPRGen/SSDT.aml to ``EFI/Clover/ACPI/Patched/``.
 
 Download AppleIntelCPUPowerManagementInfo.kext from `PikeRAlpha's thread`_.
-Install it to EFI/Clover/kexts/10.10/.
+Install it to EFI/Clover/kexts/10.10/ or 10.11/.
 
 Reboot, and use this terminal command to show the data:
 
@@ -259,7 +279,7 @@ Dump DSDT and SSDT tables and disassemble them. In Archlinux, run:
 
 Copy DSDT.dsl to your work directory, then apply patches using MaciASL.
 
-Here is a list of the patches that are commonly needed. [5]_
+Here is a list of the patches that are commonly needed. [1]_
 
 * [sys] HPET Fix
 * [sys] Add IMEI
@@ -341,8 +361,7 @@ After adding that, it will look like this:
                 PNTF (0x81)
             }
 
-Save the result named as ``2-wake-DSDT.dsl`` and ``2-wake-DSDT.aml``.
-Test it.
+Save the result named as ``2-wake-DSDT.dsl`` and ``2-wake-DSDT.aml``. Test it.
 
 DSDT Fn and Brightness
 ----------------------
@@ -356,7 +375,7 @@ Save the result named as ``3-Brightness-DSDT.dsl`` and ``3-Brightness-DSDT.aml``
 Test it.
 
 Then Fn+F5 and Fn+F6 will work well.
-It sames there is no need to patch AppleBacklight and AppleBacklightInjector. [6]_
+It sames there is no need to patch AppleBacklight and AppleBacklightInjector. [2]_
 
 Issue:
     F14(Fn+F10) is also for brightness down. F15(Fn+F11) is for brightness up.
@@ -364,28 +383,26 @@ Issue:
 Solution:
     Set Keyboard Shortcuts for Spotlight and App switcher.
 
-.. Maybe I should use IORegistryExplorer to get some information, and edit ``Fn_Keys.txt``.
-
 DSDT Battery Status
 -------------------
 
-Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/10.10/.
+Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/10.10/ or 10.11/.
 
-I test 2 patches in Rehabman's github repository Laptop-DSDT-Patch_.
+Use the battery patche in Rehabman's github repository Laptop-DSDT-Patch_.
 
 * [bat] Lenovo X220
-* [bat] Lenovo T440p
 
-X220 should be edited by deleting this line.
+X220 should be edited by deleting these lines.
 
 .. code::
 
-    into device label EC code_regex HWAC,\s+16 
-
-T440p is better with the information of time and capacity.
-
-TODO:
-    Read this `battery status guide`_. Edit the battery patch, adding the ``sleep code``.
+    into method label _STA parent_label BAT1 replace_content begin Return(0) end;
+    # sleep related T440s
+    into device label EC code_regex HWAC,\s+16 replace_matched begin WAC0,8,WAC1,8 end;
+    # sleep related T440s
+    into_all all code_regex \(HWAC, replaceall_matched begin (B1B2(WAC0,WAC1), end;
+    into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
+    into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
 
 
 Applications
@@ -409,12 +426,8 @@ oh-my-zsh
 
 
 
-
-
-
-
 .. _Lenovo Reference Doc: http://psref.lenovo.com/PSREFUploadFile/Sys/PDF/ThinkPad/ThinkPad%20T450/ThinkPad_T450_Platform_Specifications_v467.pdf
-.. _1.15: http://driverdl.lenovo.com.cn/think/download/driver/8764/BIOS%5Bjbuj50ww%5D.exe
+.. _1.18: http://driverdl.lenovo.com.cn/think/download/driver/9468/BIOS%5Bjbuj53ww%5D.exe
 
 .. _Clover Bootable ISO: http://sourceforge.net/projects/cloverefiboot/files/Bootable_ISO/
 .. _HFSPlus.efi: https://github.com/STLVNUB/CloverGrower/tree/master/Files/HFSPlus/x64
@@ -447,9 +460,5 @@ oh-my-zsh
 .. _RehabMan's ACPIBatteryManager.kext: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
 .. _battery status guide: http://www.tonymacx86.com/yosemite-laptop-support/116102-guide-how-patch-dsdt-working-battery-status.html
 
-.. [1] http://bbs.pcbeta.com/viewthread-1636724-1-1.html
-.. [2] http://bbs.pcbeta.com/viewthread-1635476-1-1.html
-.. [3] http://bbs.pcbeta.com/viewthread-1597258-1-1.html
-.. [4] http://www.tonymacx86.com/yosemite-laptop-support/145308-fix-resolve-boot-screen-garble.html
-.. [5] http://www.tonymacx86.com/yosemite-laptop-support/152573-guide-patching-laptop-dsdt-ssdts.html
-.. [6] http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
+.. [1] http://www.tonymacx86.com/yosemite-laptop-support/152573-guide-patching-laptop-dsdt-ssdts.html
+.. [2] http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
