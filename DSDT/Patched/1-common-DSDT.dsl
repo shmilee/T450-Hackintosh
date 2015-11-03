@@ -5,20 +5,20 @@
  * 
  * Disassembling to non-symbolic legacy ASL operators
  *
- * Disassembly of ./ACPI/DSDT, Mon Aug 31 13:38:44 2015
+ * Disassembly of ./ACPI/DSDT, Mon Nov  2 22:53:59 2015
  *
  * Original Table Header:
  *     Signature        "DSDT"
- *     Length           0x00010F99 (69529)
+ *     Length           0x00010F65 (69477)
  *     Revision         0x01 **** 32-bit table (V1), no 64-bit math support
- *     Checksum         0xBB
+ *     Checksum         0xB0
  *     OEM ID           "LENOVO"
  *     OEM Table ID     "TP-JB   "
- *     OEM Revision     0x00001150 (4432)
+ *     OEM Revision     0x00001180 (4480)
  *     Compiler ID      "INTL"
  *     Compiler Version 0x20120711 (538052369)
  */
-DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
+DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001180)
 {
     /*
      * iASL Warning: There were 7 external control methods found during
@@ -6432,23 +6432,12 @@ DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
 
                         Method (GMKS, 0, NotSerialized)
                         {
-                            Store (And (0x01, \_SB.PCI0.LPC.EC.FNKC), Local0)
-                            Or (Local0, 0x0200, Local0)
-                            Return (Local0)
+                            Return (\FNSC (0x02, 0x00))
                         }
 
                         Method (SMKS, 1, NotSerialized)
                         {
-                            If (And (Arg0, 0x01))
-                            {
-                                Store (0x01, \_SB.PCI0.LPC.EC.FNKC)
-                            }
-                            Else
-                            {
-                                Store (0x00, \_SB.PCI0.LPC.EC.FNKC)
-                            }
-
-                            Return (0x00)
+                            Return (\FNSC (0x03, And (Arg0, 0x00010001)))
                         }
 
                         Method (INSG, 1, NotSerialized)
@@ -11584,7 +11573,7 @@ DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
 
             Method (SHSL, 1, NotSerialized)
             {
-                Return (\FNSC (0x01, And (Arg0, 0x01)))
+                Return (\FNSC (0x01, And (Arg0, 0x00010001)))
             }
         }
 
@@ -11842,7 +11831,7 @@ DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
                 "Access Denied", 
                 "System Busy"
             })
-            Name (ITEM, Package (0x57)
+            Name (ITEM, Package (0x58)
             {
                 Package (0x02)
                 {
@@ -11883,7 +11872,7 @@ DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
                 Package (0x02)
                 {
                     0x00, 
-                    "FnKeyLock"
+                    "FnSticky"
                 }, 
 
                 Package (0x02)
@@ -12364,6 +12353,12 @@ DefinitionBlock ("./ACPI/DSDT.aml", "DSDT", 1, "LENOVO", "TP-JB   ", 0x00001150)
                 {
                     0x15, 
                     "BootTimeExtension"
+                }, 
+
+                Package (0x02)
+                {
+                    0x00, 
+                    "FnKeyAsPrimary"
                 }
             })
             Name (VSEL, Package (0x16)
