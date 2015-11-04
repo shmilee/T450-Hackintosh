@@ -430,7 +430,7 @@ Save the injector as ``USB_Injector_T450.plist``. And install it to clover kexts
 
 .. code:: bash
 
-    install USB_Injector_T450.plist /boot/EFI/Clover/kexts/10.11/USB_Injector_T450.kext/Contents/Info.plist
+    install -D USB_Injector_T450.plist /boot/EFI/Clover/kexts/10.11/USB_Injector_T450.kext/Contents/Info.plist
 
 
 Applications
