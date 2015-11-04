@@ -404,6 +404,34 @@ X220 should be edited by deleting these lines.
     into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
     into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
 
+USB Injector For El Capitan
+---------------------------
+
+In 10.11+ Apple has changed the USB drivers. Then a usb port injector is needed. For T450, controller names in ACPI are EHC1(USB2), XHCI(USB3).
+In the DSDT, var PJCD = 8 for SSP[123] Address.
+
+XHCI controller ports needed:
+
+=====  =============  =====
+port   UsbConnector   name
+=====  =============  =====
+0x01    0   (2.0)     HSP0
+0x02    0             HSP1
+0x03    0             HSP2
+0x06    255 (FP)      HSP5
+0x07    255 (BT)      HSP6
+0x08    255 (Camera)  HSP7
+0x0C    3   (3.0)     SSP0
+0x0D    3             SSP1
+0x0E    3             SSP2
+=====  =============  =====
+
+Save the injector as ``USB_Injector_T450.plist``. And install it to clover kexts/10.11.
+
+.. code:: bash
+
+    install USB_Injector_T450.plist /boot/EFI/Clover/kexts/10.11/USB_Injector_T450.kext/Contents/Info.plist
+
 
 Applications
 ============
