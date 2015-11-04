@@ -165,13 +165,17 @@ Install Image
 Download Yosemite 10.10.5 (14F27) InstallESD.dmg (MD5:ff4850735fa0a0a1d706edd21f133ef2) or
 El Capitan 10.11.1 (15B42) InstallESD.dmg (MD5:3332a4e05713366343e03ee6777c3374).
 
-Restore BaseSystem.dmg to ``/dev/sda8``.  Rename the label of sda7 to ``InstallMac``.
-Renmove link file ``/Volumes/InstallMac/System/Installation/Packages``.
-Copy ``/Volumes/OS X Install ESD/Packages`` to ``/Volumes/InstallMac/System/Installation/Packages``.
-Copy BaseSystem.dmg and BaseSystem.chunklist from ``/Volumes/OS X Install ESD`` to ``/Volumes/InstallMac``.
+And, OSInstall MBR patch should be used too, according to the partition tables.
 
-.. copy mbr/OSInstaller to System/Library/PrivateFrameworks/OSInstaller.framework/Versions/A/
-.. copy mbr/OSInstal.mpkg to System/Installation/Packages/
+1. Restore BaseSystem.dmg to HFS partition.
+2. Copy InstallESD.dmg/BaseSystem.dmg to (HFS partition) BaseSystem.dmg/
+3. Copy InstallESD.dmg/BaseSystem.chunklist to (HFS partition) BaseSystem.dmg/
+4. Copy InstallESD.dmg/AppleDiagnostics.dmg to (HFS partition) BaseSystem.dmg/
+5. Copy InstallESD.dmg/AppleDiagnostics.chunklist to (HFS partition) BaseSystem.dmg/
+6. Remove (HFS partition) BaseSystem.dmg/System/Installation/Packages
+7. Copy InstallESD.dmg/Packages to (HFS partition) BaseSystem.dmg/System/Installation/Packages
+8. OSInstall.mpkg replace to /System/Installation/Packages/OSInstall.mpkg
+9. OSInstaller replace to /System/Library/PrivateFrameworks/OSInstaller.framework/Versions/A/OSInstaller
 
 
 Install MAC OS X
