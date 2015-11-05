@@ -447,6 +447,9 @@ brew
 
     sudo xcode-select --install
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew install tig
+    brew install python3
+    brew install pandoc
 
 oh-my-zsh
 ----------
@@ -455,7 +458,9 @@ oh-my-zsh
 
     sudo scutil --set HostName osx-T450
     git clone http://222.205.57.208/cgit/oh-my-zsh-custom
-
+    cd oh-my-zsh-custom
+    make
+    make install
 
 
 .. _Lenovo Reference Doc: http://psref.lenovo.com/PSREFUploadFile/Sys/PDF/ThinkPad/ThinkPad%20T450/ThinkPad_T450_Platform_Specifications_v467.pdf
