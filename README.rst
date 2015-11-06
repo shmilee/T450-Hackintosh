@@ -70,7 +70,7 @@ In Archlinux, mount Clover-\*-X64.iso, and mount `ESP` on `/boot`, then copy fil
     find drivers64UEFI \
         drivers-Off/drivers64UEFI \
         kexts/Other \
-        tools \
+        tools/{bdmesg.efi,Shell64U.efi}\
         CLOVERX64.efi \
         config.plist \
         -exec install -D {} /boot/EFI/Clover/{} \;
@@ -150,13 +150,11 @@ Download kexts.
     # add config.plist
     cp /boot/EFI/Clover/{config.plist,config.plist.default}
     install config-mbp121.plist /boot/EFI/Clover/config.plist
-    # Install the kexts for 10.10.x
-    mv /boot/EFI/Clover/kexts/{Other,10.10}
+    # Install the kexts to Other for 10.10.x and 10.11.1
+    cd /boot/EFI/Clover/kexts/Other/
     # add VoodooHDA.kext
     # add VoodooPS2Controller_X1Carbon.kext
     # add AppleIntelE1000e.kext
-    # Install the kexts for 10.11.x
-    cp -r /boot/EFI/Clover/kexts/{10.10,10.11}
 
 
 Install Image
@@ -256,7 +254,7 @@ We'd better download the `latest Beta branch`_.
 Run ``./ssdtPRGen.sh``, copy ~/Library/ssdtPRGen/SSDT.aml to ``EFI/Clover/ACPI/Patched/``.
 
 Download AppleIntelCPUPowerManagementInfo.kext from `PikeRAlpha's thread`_.
-Install it to EFI/Clover/kexts/10.10/ or 10.11/.
+Install it to EFI/Clover/kexts/Other/.
 
 Reboot, and use this terminal command to show the data:
 
@@ -390,7 +388,7 @@ Solution:
 DSDT Battery Status
 -------------------
 
-Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/10.10/ or 10.11/.
+Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/Other/.
 
 Use the battery patche in Rehabman's github repository Laptop-DSDT-Patch_.
 
