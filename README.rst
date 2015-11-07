@@ -225,10 +225,10 @@ So, we have to patch the AppleIntelBDWGraphicsFramebuffer binary file in
 /S/L/E/AppleIntelBDWGraphicsFramebuffer.kext/Contents/MacOS/.
 
 Use app:HexFiend, find 39CF763C and replace it with 39CFEB3C for 10.10.x,
-replace 4139c4763e00 with 4139c4eb3e00 for 10.11.x.
+replace 4139c4763e with 4139c4eb3e for 10.11.x.
 
 Note:
-    The hexadecimal digits are get by ``echo -n Oc92PA== | base64 -d | hexdump``,
+    The hexadecimal digits are get by ``echo -n Oc92PA== | base64 -d | hexdump -C``,
     string Oc92PA== read from config-mbp121.plist.
 
 Do not forget to ``fix`` the kext's permissions. Othewise, you may get an error said:
