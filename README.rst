@@ -143,7 +143,7 @@ Download kexts.
 * VoodooPS2Controller_, which has some jumping/skipping issues as `jcsnider's hints thread`_ said.
   Download jcsnider's custom VoodooPS2Controller_X1Carbon.kext.zip_
 
-* AppleIntelE1000e.kext.zip_, for Ethernet controller.
+* AppleIntelE1000e.kext.zip_ or IntelMausiEthernet_, for Ethernet controller.
 
 .. code:: bash
 
@@ -154,7 +154,7 @@ Download kexts.
     cd /boot/EFI/Clover/kexts/Other/
     # add VoodooHDA.kext
     # add VoodooPS2Controller_X1Carbon.kext
-    # add AppleIntelE1000e.kext
+    # add AppleIntelE1000e.kext or IntelMausiEthernet.kext
 
 
 Install Image
@@ -478,6 +478,7 @@ oh-my-zsh
 .. _jcsnider's hints thread: http://www.tonymacx86.com/yosemite-laptop-support/162195-thinkpad-x1-carbon-3rd-gen-could-use-some-hints.html
 .. _VoodooPS2Controller_X1Carbon.kext.zip: http://www.tonymacx86.com/attachments/yosemite-laptop-support/134793d1429623831-thinkpad-x1-carbon-3rd-gen-could-use-some-hints-voodoops2controller_x1carbon.kext.zip
 .. _AppleIntelE1000e.kext.zip: http://sourceforge.net/projects/osx86drivers/files/Kext/Snow_or_Above/
+.. _IntelMausiEthernet: http://www.insanelymac.com/forum/topic/304235-intelmausiethernetkext-for-intel-onboard-lan/
 
 .. _guide for Intel HD Graphics 5500: http://www.tonymacx86.com/yosemite-laptop-support/162062-guide-intel-hd-graphics-5500-os-x-yosemite-10-10-3-a.html
 .. _guide page 20: http://www.tonymacx86.com/yosemite-laptop-support/162062-guide-intel-hd-graphics-5500-os-x-yosemite-10-10-3-a-20.html
