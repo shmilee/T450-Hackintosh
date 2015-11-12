@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SMBIOS</key>
+	<dict>
+		<key>#InfoURL1</key>
+		<string>http://browser.primatelabs.com/geekbench3/search?utf8=%E2%9C%93&q=MacBookAir7%2C2+Intel+Core+i5-5200U++Mac+OS+X+64-bit</string>
+		<key>#InfoURL2</key>
+		<string>https://pikeralpha.wordpress.com/2014/06/11/apple-serial-numbers-ending-with-g000-gzzz/</string>
+		<key>BiosReleaseDate</key>
+		<string>03/24/2015</string>
+		<key>BiosVendor</key>
+		<string>Apple Inc.</string>
+		<key>BiosVersion</key>
+		<string>MBA72.88Z.0099.A00.1503241329</string>
+		<key>Board-ID</key>
+		<string>Mac-937CB26E2E02BB01</string>
+		<key>BoardManufacturer</key>
+		<string>Apple Inc.</string>
+		<key>BoardType</key>
+		<integer>10</integer>
+		<key>ChassisAssetTag</key>
+		<string>MacBook-Aluminum</string>
+		<key>ChassisManufacturer</key>
+		<string>Apple Inc.</string>
+		<key>ChassisType</key>
+		<string>0x09</string>
+		<key>Family</key>
+		<string>MacBook Air</string>
+		<key>Manufacturer</key>
+		<string>Apple Inc.</string>
+		<key>Mobile</key>
+		<true/>
+		<key>ProductName</key>
+		<string>MacBookAir7,2</string>
+		<key>SerialNumber</key>
+		<string>C1DXXXXXG942</string>
+		<key>Trust</key>
+		<false/>
+		<key>Version</key>
+		<string>1.0</string>
+	</dict>
+</dict>
+</plist>
