@@ -1,0 +1,10 @@
+#sleep related T450 (LED blink)
+# may no effect for dsdt.dsl disassembled by linux
+
+into method label \_WAK code_regex (If.*LEqual.*Arg.*3.*\n.*\n.*NVSS.*)\n(.*Store.*) replaceall_matched
+begin
+%1\n
+            \\_SB.PCI0.LPC.EC.LED(0x00, 0x80)\n
+            \\_SB.PCI0.LPC.EC.LED(0x0A, 0x80)\n
+%2
+end;
