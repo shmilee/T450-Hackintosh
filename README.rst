@@ -296,8 +296,8 @@ Here is a list of the patches that are commonly needed. [1]_
 Hint:
     Apply one at a time. Verify it creats no error.
 
-Save the result named as ``1-common-DSDT.dsl`` and ``1-common-DSDT.aml``.
-Copy ``1-common-DSDT.aml`` to EFI/Clover/ACPI/patched/DSDT.aml, and test it.
+Save the result named as ``patched_1_DSDT.dsl`` and ``patched_1_DSDT.aml``.
+Copy aml file to EFI/Clover/ACPI/patched/DSDT.aml, and test it.
 
 DSDT Wake Fix
 -------------
@@ -331,14 +331,9 @@ Then, search IGBE in DSDT.
             }
 
 We can remove _PRW names to prevent instant wake, but it seems to work better if _PRW is present, but returns 0 (original was 0x04 or 0x03) for sleep state.
-So we apply the flowing patch to ``1-common-DSDT.dsl``:
+So we apply the flowing patch to ``patched_1_DSDT.dsl``:
 
-.. code::
-
-    into_all all code_regex 0x6D,.*\n.*0x0[34] replaceall_matched begin
-    0x6D, \n
-                        0x00
-    end;
+* ./DSDT/patch-files/2_usb_prw.txt
 
 After wake up from sleep, power led and red dot light continute to blink.
 We can fix this by adding these lines into method _WAK after NVSS: (Ref: `Ludacrisvp's t440s guide`_)
@@ -354,16 +349,13 @@ After adding that, it will look like this:
 
         If (LEqual (Arg0, 0x03))
         {
-            NVSS (0x00)
+            \NVSS (0x00)
             \_SB.PCI0.LPC.EC.LED (0x00, 0x80)
             \_SB.PCI0.LPC.EC.LED (0x0A, 0x80)
             Store (\_SB.PCI0.LPC.EC.AC._PSR (), PWRS)
-            If (OSC4)
-            {
-                PNTF (0x81)
-            }
 
-Save the result named as ``2-wake-DSDT.dsl`` and ``2-wake-DSDT.aml``. Test it.
+This patch: ``./DSDT/patch-files/2_led_blink.txt`` can also do it.
+Save the result named as ``patched_2_DSDT.dsl`` and ``patched_2_DSDT.aml``. Test it.
 
 DSDT Fn and Brightness
 ----------------------
@@ -373,7 +365,7 @@ We also need a brightness fix patch in Rehabman's github repository Laptop-DSDT-
 
 * [igpu] Brightness fix (Haswell)
 
-Save the result named as ``3-Brightness-DSDT.dsl`` and ``3-Brightness-DSDT.aml``.
+Save the result named as ``patched_3_DSDT.dsl`` and ``patched_3_DSDT.aml``.
 Test it.
 
 Then Fn+F5 and Fn+F6 will work well.
@@ -405,6 +397,12 @@ X220 should be edited by deleting these lines.
     into_all all code_regex \(HWAC, replaceall_matched begin (B1B2(WAC0,WAC1), end;
     into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
     into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
+
+DSDT auto patch script
+----------------------
+
+All the patches we used are in directory ``./DSDT/patch-files``, and there is a auto_patch script used to do the things of common, led sleep, brightness, battery patches. Thanks to the command line patcher, Rehabman's patchmatic.
+
 
 USB Injector For El Capitan
 ---------------------------
