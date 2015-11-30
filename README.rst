@@ -382,21 +382,10 @@ DSDT Battery Status
 
 Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/Other/.
 
-Use the battery patche in Rehabman's github repository Laptop-DSDT-Patch_.
+Use the battery patch: ``./DSDT/patch-files/4_battery_Lenovo-T450.txt``.
+Save the result named as ``patched_4_DSDT.dsl`` and ``patched_4_DSDT.aml``.
+Test it.
 
-* [bat] Lenovo X220
-
-X220 should be edited by deleting these lines.
-
-.. code::
-
-    into method label _STA parent_label BAT1 replace_content begin Return(0) end;
-    # sleep related T440s
-    into device label EC code_regex HWAC,\s+16 replace_matched begin WAC0,8,WAC1,8 end;
-    # sleep related T440s
-    into_all all code_regex \(HWAC, replaceall_matched begin (B1B2(WAC0,WAC1), end;
-    into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
-    into_all all code_regex \(\\_SB\.PCI0\.LPC\.EC\.HWAC, replaceall_matched begin (B1B2(\\_SB.PCI0.LPC.EC.WAC0,\\_SB.PCI0.LPC.EC.WAC1), end;
 
 DSDT auto patch script
 ----------------------
