@@ -442,10 +442,27 @@ brew
 .. code:: bash
 
     sudo xcode-select --install
+
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew install tig
+    #or git clone --depth=1 git://mirrors.tuna.tsinghua.edu.cn/homebrew.git /usr/local
+
+    brew tap homebrew/dupes
+    brew tap homebrew/science
+    #cd /usr/local/Library/Taps/homebrew/homebrew-science
+    #git remote set-url origin git://mirrors.tuna.tsinghua.edu.cn/homebrew-science.git
+
+    brew install wget tig pandoc coreutils gcc
+
+python3
+--------
+
+.. code:: bash
+
     brew install python3
-    brew install pandoc
+    brew linkapps
+    mkdir ~/.pip
+    #echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > ~/.pip/pip.conf
+    pip3 install ipython notebook numpy scipy matplotlib
 
 oh-my-zsh
 ----------
@@ -453,7 +470,7 @@ oh-my-zsh
 .. code:: bash
 
     sudo scutil --set HostName osx-T450
-    git clone http://222.205.57.208/cgit/oh-my-zsh-custom
+    git clone https://github.com/shmilee/oh-my-zsh-custom.git
     cd oh-my-zsh-custom
     make
     make install
