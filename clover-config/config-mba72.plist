@@ -255,14 +255,18 @@
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
+		<key>#InfoURL1</key>
+		<string>http://browser.primatelabs.com/geekbench3/search?q=MacBookAir7%2C2+i5-5200U+64</string>
+		<key>#InfoURL2</key>
+		<string>https://pikeralpha.wordpress.com/2014/06/11/apple-serial-numbers-ending-with-g000-gzzz/</string>
 		<key>BiosReleaseDate</key>
 		<string>03/24/2015</string>
 		<key>BiosVendor</key>
 		<string>Apple Inc.</string>
 		<key>BiosVersion</key>
-		<string>MBP121.88Z.0167.B02.1503241251</string>
+		<string>MBA72.88Z.0099.A00.1503241329</string>
 		<key>Board-ID</key>
-		<string>Mac-E43C1C25D4880AD6</string>
+		<string>Mac-937CB26E2E02BB01</string>
 		<key>BoardManufacturer</key>
 		<string>Apple Inc.</string>
 		<key>BoardType</key>
@@ -272,17 +276,17 @@
 		<key>ChassisManufacturer</key>
 		<string>Apple Inc.</string>
 		<key>ChassisType</key>
-		<string>08</string>
+		<string>0x09</string>
 		<key>Family</key>
-		<string>MacBook Pro</string>
+		<string>MacBook Air</string>
 		<key>Manufacturer</key>
 		<string>Apple Inc.</string>
 		<key>Mobile</key>
 		<true/>
 		<key>ProductName</key>
-		<string>MacBookPro12,1</string>
+		<string>MacBookAir7,2</string>
 		<key>SerialNumber</key>
-		<string>C02XXXXXFVH3</string>
+		<string>C1DXXXXXG942</string>
 		<key>Trust</key>
 		<false/>
 		<key>Version</key>

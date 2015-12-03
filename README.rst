@@ -111,9 +111,9 @@ Then copy it to ``/boot/EFI/Clover/config.plist``, change the ScreenResolution, 
 add CPU Frequency, and set ``GUI -> Scan -> Legacy`` to ``false``. 
 Make sure the ``ig-platform-id`` is ``0x16160002``. 
 Enable KextsToPatch: ``Disable minStolenSize`` for 10.10.x and 10.11.x, ``Boot graphics glitch``.
-Change ``SMBIOS``, MacBookPro12,1 and add SerialNumber C02[XXXXX(replace 5X)]FVH3.
+Change ``SMBIOS``, MacBookAir7,2 and add SerialNumber C1D[XXXXX(replace 5X)]G942.
 
-Save the changed config.plist as ``config-mbp121.plist``.
+Save the changed config.plist as ``config-mba72.plist``.
 
 Download kexts.
 
@@ -149,7 +149,7 @@ Download kexts.
 
     # add config.plist
     cp /boot/EFI/Clover/{config.plist,config.plist.default}
-    install config-mbp121.plist /boot/EFI/Clover/config.plist
+    install config-mba72.plist /boot/EFI/Clover/config.plist
     # Install the kexts to Other for 10.10.x and 10.11.1
     cd /boot/EFI/Clover/kexts/Other/
     # add VoodooHDA.kext
@@ -229,7 +229,7 @@ replace 4139c4763e with 4139c4eb3e for 10.11.x.
 
 Note:
     The hexadecimal digits are get by ``echo -n Oc92PA== | base64 -d | hexdump -C``,
-    string Oc92PA== read from config-mbp121.plist.
+    string Oc92PA== read from config_HD5300_5500_6000.plist.
 
 Do not forget to ``fix`` the kext's permissions. Othewise, you may get an error said:
 
@@ -238,12 +238,12 @@ Do not forget to ``fix`` the kext's permissions. Othewise, you may get an error 
     Graphics driver failed to load: could not register with Framebuffer driver!
 
 The recommended and easier way is just to modify EFI/Clover/config.plist,
-which is already done by config-mbp121.plist.
+which is already done by config-mba72.plist.
 
 Boot Screen Garble
 ------------------
 
-Enable KextsToPatch ``Boot graphics glitch``, which is already done by config-mbp121.plist.
+Enable KextsToPatch ``Boot graphics glitch``, which is already done by config-mba72.plist.
 
 SSDT for PM
 -----------
