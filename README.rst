@@ -426,8 +426,28 @@ Remap Home/End keys
 
 Run the script ``./HomeEndFix/install.sh``.
 
+Use patched AppleHDA
+---------------------
 
+First, remove the VoodooHDA in EFI/Clover/kexts/Other.
 
+Then enter the directory ALC3232.
+
+.. code:: bash
+
+    make # generate AppleHDAInjector.kext, clover's config-add-ALC.plist
+    make install # copy AppleHDAInjector.kext CodecCommander.kext to /Library/Extensions/
+    #repair permissions and update the system cache.
+    #copy config-add-ALC.plist to EFI/Clover/config.plist
+
+Enter the directory DSDT.
+
+.. code:: bash
+
+    ./auto_patch.sh #path 5_audio_HDEF-layout1.txt
+    # copy result/patched_5_DSDT.aml to EFI/Clover/ACPI/Patched/DSDT.aml
+
+Reboot, and check.
 
 Applications
 ============
