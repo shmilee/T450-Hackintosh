@@ -1,5 +1,9 @@
 ~
 README-article.pdf
+ALC3232/codec/*
+ALC3232/AppleHDAALC3232.kext
+ALC3232/config-add-ALC.plist
+!ALC3232/codec/alc3232_codec_dump.txt
 clover/Clover-*.iso*
 DSDT/Laptop-DSDT-Patch*.zip
 DSDT/RehabMan-MaciASL*.zip
