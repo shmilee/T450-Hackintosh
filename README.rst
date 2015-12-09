@@ -369,7 +369,7 @@ Save the result named as ``patched_3_DSDT.dsl`` and ``patched_3_DSDT.aml``.
 Test it.
 
 Then Fn+F5 and Fn+F6 will work well.
-It sames there is no need to patch AppleBacklight and AppleBacklightInjector. [2]_
+It sames there is no need to patch `AppleBacklight and AppleBacklightInjector`_.
 
 Issue:
     F14(Fn+F10) is also for brightness down. F15(Fn+F11) is for brightness up.
@@ -420,6 +420,13 @@ Save the injector as ``USB_Injector_T450.plist``. And install it to clover kexts
 .. code:: bash
 
     install -D USB_Injector_T450.plist /boot/EFI/Clover/kexts/10.11/USB_Injector_T450.kext/Contents/Info.plist
+
+Remap Home/End keys
+--------------------
+
+Run the script ``./HomeEndFix/install.sh``.
+
+
 
 
 Applications
@@ -496,9 +503,9 @@ oh-my-zsh
 .. _Laptop-DSDT-Patch: https://github.com/RehabMan/Laptop-DSDT-Patch
 .. _toleda's thread: http://www.tonymacx86.com/audio/58368-guide-how-make-copy-ioreg.html
 .. _Ludacrisvp's t440s guide: http://www.tonymacx86.com/yosemite-laptop-guides/158369-guide-lenovo-t440s-clover-uefi.html
-
+.. _AppleBacklight and AppleBacklightInjector: http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
 .. _RehabMan's ACPIBatteryManager.kext: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
 .. _battery status guide: http://www.tonymacx86.com/yosemite-laptop-support/116102-guide-how-patch-dsdt-working-battery-status.html
 
 .. [1] http://www.tonymacx86.com/yosemite-laptop-support/152573-guide-patching-laptop-dsdt-ssdts.html
-.. [2] http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
+
