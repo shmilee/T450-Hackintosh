@@ -65,7 +65,7 @@ if askyes "==>" "Disassemble ACPI tables."; then
     if ! $IASL -e SSDT* -dl DSDT; then
         echo "==> Failed to disassemble ACPI tables."
         echo "==> Check the command: "
-        echp "$IASL -e SSDT* -dl DSDT"
+        echo "$IASL -e SSDT* -dl DSDT"
         exit 5
     fi
     cd ..
@@ -79,7 +79,7 @@ if askyes "==>" "Patch the files."; then
         exit 6
     fi
     cp -v ./result/{origin_DSDT.dsl,patching_DSDT.dsl}
-    for prefix in {1,2,3,4}_ ; do
+    for prefix in {1,2,3,4,5}_ ; do
         N=$(find ./patch-files -name "${prefix}*" |wc -l |awk '{print $1}')
         if [[ x$N == x0 ]];then
             continue
@@ -95,7 +95,7 @@ if askyes "==>" "Patch the files."; then
 fi
 
 if askyes "==>" "Compile ACPI Tables."; then
-    for prefix in origin patched_{1,2,3,4} ; do
+    for prefix in origin patched_{1,2,3,4,5} ; do
         if [ ! -f ./result/${prefix}_DSDT.dsl ]; then
             echo " -> ./result/${prefix}_DSDT.dsl not found. SKIP."
             continue
