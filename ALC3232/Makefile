@@ -42,9 +42,7 @@ codecsvg: $(codec_dump)
 	rm $(codecdir)/codec_tmp.svg
 
 clean:
-	-rm -f $(codecdir)/verbs_detail.txt
-	-rm -f $(codecdir)/verbitdebug.txt
-	-rm -f $(codecdir)/codec_dump_dec.svg
+	-rm -rf $(codecdir)/verb*
 	-rm -rf AppleHDAALC*
 	-rm -f ./config-add-ALC.plist
 
