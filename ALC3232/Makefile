@@ -7,28 +7,35 @@ createkext :=./createAppleHDAInjector.sh
 createconf :=./addPatch2clover.sh
 patch_hda  :=./tools/patch-hda.pl
 zlib       :=./tools/zlib.pl
-kext_src   :=$(wildcard ./Resources/*.plist)
+hdaverb    :=./tools/hda-verb
+nodesdump  :=./tools/nodes_dump.sh
+kext_src   :=Resources/ahhcd.plist \
+		Resources/layout1.plist \
+		Resources/Platforms.plist\
+		Resources/codecProfile.plist
 
 clover_config :=../clover-config/config-mba72.plist
-cdcmd :=./RehabMan-CodecCommander-2015-1122.zip
+CCzip :=./RehabMan-CodecCommander-2015-1122.zip
+CCver :=Release
 
 all: kext config
 
 install: kext $(cdcmd)
-	rm -rf /tmp/CodecCommander
-	mkdir /tmp/CodecCommander
-	unzip -x RehabMan-CodecCommander-2015-1122.zip -d /tmp/CodecCommander
 	sudo rm -rf /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
-	sudo cp -r /tmp/CodecCommander/Release/CodecCommander.kext /Library/Extensions/
+	sudo cp -r /tmp/CodecCommander/$(CCver)/CodecCommander.kext /Library/Extensions/
 	sudo cp -r ./AppleHDAALC3232.kext /Library/Extensions/AppleHDAALC3232.kext
 	sudo chown -R root:wheel /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
 	@echo "==> Please Use Kext Utility to Repair Permissions and Updating the system cache."
 	@#sudo chmod -R 755 /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
 	ls -l /Library/Extensions/
 
-
 kext: $(kext_src) $(zlib)
 	$(createkext)
+	rm -rf /tmp/CodecCommander
+	mkdir /tmp/CodecCommander
+	unzip -q -x $(CCzip) -d /tmp/CodecCommander
+	/usr/libexec/plistbuddy -c "Merge ./Resources/codecProfile.plist ':IOKitPersonalities:CodecCommander:Codec Profile'" \
+	/tmp/CodecCommander/$(CCver)/CodecCommander.kext/Contents/Info.plist
 
 config: $(clover_config) $(patch_hda)
 	$(createconf) $<
@@ -41,8 +48,10 @@ codecsvg: $(codec_dump)
 	$(hex2dec) $(codecdir)/codec_tmp.svg > $(codecdir)/codec_dump_dec.svg
 	rm $(codecdir)/codec_tmp.svg
 
+checknodes: $(hdaverb)
+	$(nodesdump) $(hdaverb)
+
 clean:
 	-rm -rf $(codecdir)/verb*
 	-rm -rf AppleHDAALC*
 	-rm -f ./config-add-ALC.plist
-

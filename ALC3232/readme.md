@@ -176,3 +176,21 @@ Layout Values
 =============
 
 MuteGPIO: VREF + 0100 +NodeID -> Decimal; VREF_HIZ -> 0.
+
+
+Custom commands of CodecCommander
+=================================
+
+1. [Pin Control Widget](http://www.tonymacx86.com/yosemite-laptop-support/159031-any-fix-garbled-distorted-headphone-issue-2.html)
+
+  Nodes: 0x12, 0x14, 0x15, 0x1a; Pin-ctls: 0x20, 0x40, 0xc0, 0x24.
+
+  Calculate: ./hda-verb <Node> SET_PIN_WIDGET_CONTROL <Pin-ctl>
+
+  Result: `0x01270720`, `0x01470740`, `0x015707c0`(needed), `0x01a70724`(needed).
+
+2. Unsolicited Response control, referance **high-definition-audio-specification.pdf**, 7.3.3.14
+
+  Nodes: 0x15
+
+  Result: `0x1570883`

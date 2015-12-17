@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>10ec_0292_HDA_17aa_5034</key>
+	<string>Realtek ALC292 MJ3232</string>
+	<key>Realtek ALC292 MJ3232</key>
+	<dict>
+		<key>Custom Commands</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<data>
+				AVcIgw==
+				</data>
+				<key>Comment</key>
+				<string>0x15 SET_UNSOLICITED_ENABLE 0x83</string>
+				<key>On Init</key>
+				<true/>
+				<key>On Sleep</key>
+				<false/>
+				<key>On Wake</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>Command</key>
+				<data>
+				AacHJA==
+				</data>
+				<key>Comment</key>
+				<string>0x1a - Pin Widget Control</string>
+				<key>On Init</key>
+				<true/>
+				<key>On Sleep</key>
+				<false/>
+				<key>On Wake</key>
+				<true/>
+			</dict>
+		</array>
+		<key>Perform Reset</key>
+		<false/>
+	</dict>
+</dict>
+</plist>
