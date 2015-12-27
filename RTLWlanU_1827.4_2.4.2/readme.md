@@ -5,7 +5,8 @@ Support OS: 10.9 - 10.11
 * rtwlanu1827.tar.gz and wirelessNetworkUtility.tar.gz  
   get from driver cd, version 2.4.2
 * sleepwatcher_2.2.tgz  
-  get from http://www.bernhard-baehr.de
+  get from http://www.bernhard-baehr.de  
+  fix problem: wifi Radio ON breaks sleep
 
 # Usage
 
