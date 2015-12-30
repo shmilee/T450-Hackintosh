@@ -3,8 +3,9 @@ file2:=./wirelessNetworkUtility.tar.gz
 file3:=./sleepwatcher_2.2.tgz
 file3_url:=http://www.bernhard-baehr.de
 
-BINDIR=/usr/local/sbin
+BINDIR=/usr/local/bin
 MANDIR=/usr/local/share/man/man8
+LDpath=/Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist
 
 all:
 	@echo "install | uninstall | listcards"
@@ -30,20 +31,21 @@ listcards: get_support_cards.py
 
 sleepwatcher: $(file3) rc.sleep rc.wakeup
 	tar zxvf $(file3) -C /tmp/
-	sudo install -d -m 755 $(BINDIR) $(MANDIR)
-	sudo install -o root -g wheel -m 755 /tmp/sleepwatcher_2.2/sleepwatcher $(BINDIR)/
-	sudo install -o root -g wheel -m 644 /tmp/sleepwatcher_2.2/sleepwatcher.8 $(MANDIR)/
+	install -d -m 755 $(BINDIR) $(MANDIR)
+	install -m 755 /tmp/sleepwatcher_2.2/sleepwatcher $(BINDIR)/
+	install -m 644 /tmp/sleepwatcher_2.2/sleepwatcher.8 $(MANDIR)/
 	sudo install -o root -g wheel -m 644 \
 		/tmp/sleepwatcher_2.2/config/de.bernhard-baehr.sleepwatcher-20compatibility.plist\
-		/Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist
+		$(LDpath)
 	sudo install -o root -g wheel -m 755 rc.sleep /etc/rc.sleep
 	sudo install -o root -g wheel -m 755 rc.wakeup /etc/rc.wakeup
-	sudo launchctl load -w -F /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist
+	sudo sed -i "" 's|/usr/local/sbin|$(BINDIR)|' $(LDpath)
+	sudo launchctl load -w -F $(LDpath)
 
 rmsleepwatcher:
-	-sudo launchctl unload /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist
-	sudo rm -f /Library/LaunchDaemons/de.bernhard-baehr.sleepwatcher.plist
-	sudo rm -f /usr/local/sbin/sleepwatcher
-	sudo rm -f /usr/local/share/man/man8/sleepwatcher.8
+	-sudo launchctl unload $(LDpath)
+	sudo rm -f $(LDpath)
+	rm -f $(BINDIR)/sleepwatcher
+	rm -f $(MANDIR)/sleepwatcher.8
 	sudo rm -f /etc/rc.sleep /etc/rc.wakeup
 
