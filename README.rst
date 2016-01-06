@@ -108,8 +108,8 @@ Config for T450
 
 Download `config.plist`_ for Hd5500 from RehabMan's github repository OS-X-Clover-Laptop-Config_.
 Then copy it to ``/boot/EFI/Clover/config.plist``, change the ScreenResolution, Theme, Timeout,
-add CPU Frequency, and set ``GUI -> Scan -> Legacy`` to ``false``. 
-Make sure the ``ig-platform-id`` is ``0x16160002``. 
+add CPU Frequency, and set ``GUI -> Scan -> Legacy`` to ``false``.
+Make sure the ``ig-platform-id`` is ``0x16160002``.
 Enable KextsToPatch: ``Disable minStolenSize`` for 10.10.x and 10.11.x, ``Boot graphics glitch``.
 Change ``SMBIOS``, MacBookAir7,2 and add SerialNumber C1D[XXXXX(replace 5X)]G942.
 
@@ -125,7 +125,7 @@ Download kexts.
   Half Volume Fix = Yes
 
   Nodes to Patch:
-  
+
   .. code:: xml
 
     <key>NodesToPatch</key>
@@ -207,7 +207,7 @@ Here is what I get from BIOS 1.18 rom.
 .. code::
 
     Result:
-    
+
     0x2685E 	Grayout If: {19 82}
     0x26860 		Security: 85B75607-F7CE-471E-B7E4-2AEA5F7232EE {60 92 07 56 B7 85 CE F7 1E ...
     0x26872 			Not {17 02}
@@ -325,7 +325,7 @@ Then, search IGBE in DSDT.
                 Name (RID, 0x00)
                 Name (_PRW, Package (0x02)  // _PRW: Power Resources for Wake
                 {
-                    0x6D, 
+                    0x6D,
                     0x04
                 })
             }
@@ -452,6 +452,17 @@ Reboot, and check.
 Applications
 ============
 
+dock
+-----
+
+.. code:: bash
+
+    defaults write com.apple.dock orientation -string left
+    defaults write com.apple.dock springboard-columns -int 9
+    #sudo mv /Applications/{Utilities,Utilities.lost}
+    defaults write com.apple.dock ResetLaunchPad -bool TRUE;killall Dock
+    #sudo mv /Applications/{Utilities.lost,Utilities}
+
 brew
 -----
 
@@ -467,7 +478,26 @@ brew
     #cd /usr/local/Library/Taps/homebrew/homebrew-science
     #git remote set-url origin git://mirrors.tuna.tsinghua.edu.cn/homebrew-science.git
 
-    brew install wget tig pandoc coreutils gcc
+    brew install wget tig pandoc coreutils gcc iproute2mac
+    brew cask install --appdir=/Applications aliwangwang atom firefox hex-fiend jabref \
+        kext-utility kodi maciasl macvim mplayerx mpv sshfs torbrowser transmission
+    for myapp in Firefox QQ; do
+        defaults write com.apple.dock persistent-apps -array-add "<dict>
+        <key>tile-data</key>
+            <dict>
+                <key>file-data</key>
+                    <dict>
+                        <key>_CFURLString</key>
+                        <string>file:///Applications/${myapp}.app</string>
+                        <key>_CFURLStringType</key>
+                        <integer>15</integer>
+                    </dict>
+                <key>file-label</key>
+                    <string>${myapp}</string>
+            </dict>
+        </dict>"
+    done
+    killall Dock
 
 python3
 --------
@@ -476,9 +506,9 @@ python3
 
     brew install python3
     brew linkapps
-    mkdir ~/.pip
+    #mkdir ~/.pip
     #echo -e '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple' > ~/.pip/pip.conf
-    pip3 install ipython notebook numpy scipy matplotlib
+    pip3 install ipython notebook ipywidgets numpy scipy sympy pandas matplotlib
 
 oh-my-zsh
 ----------
@@ -528,4 +558,3 @@ oh-my-zsh
 .. _battery status guide: http://www.tonymacx86.com/yosemite-laptop-support/116102-guide-how-patch-dsdt-working-battery-status.html
 
 .. [1] http://www.tonymacx86.com/yosemite-laptop-support/152573-guide-patching-laptop-dsdt-ssdts.html
-
