@@ -106,10 +106,9 @@ Copy it to the themes directory.
 Config for T450
 ---------------
 
-Download `config.plist`_ for Hd5500 from RehabMan's github repository OS-X-Clover-Laptop-Config_.
+Download `config.plist`_ for HD5500 from RehabMan's github repository OS-X-Clover-Laptop-Config_.
 Then copy it to ``/boot/EFI/Clover/config.plist``, change the ScreenResolution, Theme, Timeout,
 add CPU Frequency, and set ``GUI -> Scan -> Legacy`` to ``false``.
-Make sure the ``ig-platform-id`` is ``0x16160002``.
 Enable KextsToPatch: ``Disable minStolenSize`` for 10.10.x and 10.11.x, ``Boot graphics glitch``.
 Change ``SMBIOS``, MacBookAir7,2 and add SerialNumber C1D[XXXXX(replace 5X)]G942.
 
@@ -525,7 +524,7 @@ oh-my-zsh
 .. _MavericksLogin: http://clover-wiki.zetam.org/Theme-database
 .. _minimal: https://github.com/theracermaster/clover-minimal
 
-.. _config.plist: https://github.com/RehabMan/OS-X-Clover-Laptop-Config/blob/master/config_HD5300_5500_6000.plist
+.. _config.plist: https://github.com/RehabMan/OS-X-Clover-Laptop-Config/blob/master/config_HD5300_5500_5600_6000.plist
 .. _OS-X-Clover-Laptop-Config: https://github.com/RehabMan/OS-X-Clover-Laptop-Config
 
 .. _VoodooHDA.kext-287.zip: http://sourceforge.net/projects/voodoohda/
