@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+		<array>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Realtek ALC3232</string>
+				<key>Find</key>
+				<data>hQjsEA==</data>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Realtek ALC3232</string>
+				<key>Find</key>
+				<data>gxnUEQ==</data>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Realtek ALC3232</string>
+				<key>Find</key>
+				<data>hBnUEQ==</data>
+				<key>Replace</key>
+				<data>kgLsEA==</data>
+			</dict>
+		</array>
+</plist>

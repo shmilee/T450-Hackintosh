@@ -4,7 +4,7 @@ codecgraph :=./tools/codecgraph-20120114.py
 hex2dec    :=./tools/convert_hex_to_dec.rb
 verbit     :=./tools/verbit.sh
 createkext :=./createAppleHDAInjector.sh
-createconf :=./addPatch2clover.sh
+getpatch   :=./createAppleHDAPatch.sh
 patch_hda  :=./tools/patch-hda.pl
 zlib       :=./tools/zlib.pl
 hdaverb    :=./tools/hda-verb
@@ -14,13 +14,13 @@ kext_src   :=Resources/ahhcd.plist \
 		Resources/Platforms.plist\
 		Resources/codecProfile.plist
 
-clover_config :=../clover-config/config-mba72.plist
+patchfile :=$(PWD)/AppleHDA_patch.plist
 CCzip :=./RehabMan-CodecCommander-2015-1122.zip
 CCver :=Release
 
-all: kext config
+all: kext
 
-install: kext $(cdcmd)
+install: kext
 	sudo rm -rf /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
 	sudo cp -r /tmp/CodecCommander/$(CCver)/CodecCommander.kext /Library/Extensions/
 	sudo cp -r ./AppleHDAALC3232.kext /Library/Extensions/AppleHDAALC3232.kext
@@ -29,7 +29,7 @@ install: kext $(cdcmd)
 	@#sudo chmod -R 755 /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
 	ls -l /Library/Extensions/
 
-kext: $(kext_src) $(zlib)
+kext: $(kext_src) $(zlib) $(CCzip)
 	$(createkext)
 	rm -rf /tmp/CodecCommander
 	mkdir /tmp/CodecCommander
@@ -37,8 +37,8 @@ kext: $(kext_src) $(zlib)
 	/usr/libexec/plistbuddy -c "Merge ./Resources/codecProfile.plist ':IOKitPersonalities:CodecCommander:Codec Profile'" \
 	/tmp/CodecCommander/$(CCver)/CodecCommander.kext/Contents/Info.plist
 
-config: $(clover_config) $(patch_hda)
-	$(createconf) $<
+hdapatch: $(getpatch) $(patch_hda)
+	$(getpatch) $(patchfile)
 
 configdata: $(codec_dump)
 	$(verbit) $< > $(codecdir)/verbs_detail.txt
@@ -54,4 +54,3 @@ checknodes: $(hdaverb)
 clean:
 	-rm -rf $(codecdir)/verb*
 	-rm -rf AppleHDAALC*
-	-rm -f ./config-add-ALC.plist

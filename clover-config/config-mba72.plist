@@ -402,38 +402,38 @@
 				<data>AgQJAAAIAACCAAAA/wA=</data>
 			</dict>
 			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Realtek ALC3232</string>
 				<key>Disabled</key>
 				<false/>
 				<key>Find</key>
 				<data>hQjsEA==</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>AAAAAA==</data>
 			</dict>
 			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Realtek ALC3232</string>
 				<key>Disabled</key>
 				<false/>
 				<key>Find</key>
 				<data>gxnUEQ==</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>AAAAAA==</data>
 			</dict>
 			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Realtek ALC3232</string>
 				<key>Disabled</key>
 				<false/>
 				<key>Find</key>
 				<data>hBnUEQ==</data>
-				<key>Name</key>
-				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>kgLsEA==</data>
 			</dict>
