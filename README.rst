@@ -270,16 +270,25 @@ Download patches from Rehabman's github repository Laptop-DSDT-Patch_.
 
 Download IORegistryExplorer from `toleda's thread`_
 
-Dump DSDT and SSDT tables and disassemble them. In Archlinux, run:
+Dump DSDT and SSDT tables in Archlinux:
 
 .. code:: bash
 
-    mkdir ./ACPI/
-    find /sys/firmware/acpi/tables \( -name "*SSDT*" -o -name '*DSDT*' \) -exec sudo cp {} ./ACPI/ \;
-    sudo chmod 644 ./ACPI/*
-    iasl -e ./ACPI/SSDT* -dl ./ACPI/DSDT
+    mkdir ./ACPI-Tables/
+    find /sys/firmware/acpi/tables \( -name "*SSDT*" -o -name '*DSDT*' \) -exec sudo cp {} ./ACPI-Tables/ \;
+    sudo chmod 644 ./ACPI-Tables/*
+
+Copy tables to Mac OS X, then use iasl in MaciASL to disassemble them.
+
+.. code:: bash
+
+    /Applications/MaciASL.app/Contents/MacOS/iasl5 -e ./ACPI-Tables/SSDT* -dl ./ACPI-Tables/DSDT
 
 Copy DSDT.dsl to your work directory, then apply patches using MaciASL.
+
+Note:
+    Both disassemble DSDT and apply patches should be in Mac OS X.
+    If you disassemble DSDT in Linux, then apply patches in Mac OS X, some patches may have no effect.
 
 Here is a list of the patches that are commonly needed. [1]_
 
@@ -336,25 +345,11 @@ So we apply the flowing patch to ``patched_1_DSDT.dsl``:
 * ./DSDT/patch-files/2_usb_prw.txt
 
 After wake up from sleep, power led and red dot light continute to blink.
-We can fix this by adding these lines into method _WAK after NVSS: (Ref: `Ludacrisvp's t440s guide`_)
 
-.. code::
+We can fix this by adding control method _SI._SST into method _WAK. (Ref: `XDleader555's post`_)
+According to `ACPI Specification Revision 5.0a`_ 9.1.1 _SST(System Status), Arg0 should be ``1``.
 
-    \_SB.PCI0.LPC.EC.LED (0x00, 0x80)
-    \_SB.PCI0.LPC.EC.LED (0x0A, 0x80)
-
-After adding that, it will look like this:
-
-.. code::
-
-        If (LEqual (Arg0, 0x03))
-        {
-            \NVSS (0x00)
-            \_SB.PCI0.LPC.EC.LED (0x00, 0x80)
-            \_SB.PCI0.LPC.EC.LED (0x0A, 0x80)
-            Store (\_SB.PCI0.LPC.EC.AC._PSR (), PWRS)
-
-This patch: ``./DSDT/patch-files/2_led_blink.txt`` can also do it.
+Here is the patch: ``./DSDT/patch-files/2_led_blink.txt``.
 Save the result named as ``patched_2_DSDT.dsl`` and ``patched_2_DSDT.aml``. Test it.
 
 DSDT Fn and Brightness
@@ -480,7 +475,7 @@ brew
 
     brew install wget tig pandoc coreutils gcc iproute2mac
     brew cask install --appdir=/Applications aliwangwang atom firefox hex-fiend jabref \
-        kext-utility kodi maciasl macvim mplayerx mpv sshfs torbrowser transmission
+        kext-utility kodi macvim mplayerx mpv sshfs torbrowser transmission
     for myapp in Firefox QQ; do
         defaults write com.apple.dock persistent-apps -array-add "<dict>
         <key>tile-data</key>
@@ -552,7 +547,8 @@ oh-my-zsh
 .. _os-x-maciasl-patchmatic: https://bitbucket.org/RehabMan/os-x-maciasl-patchmatic/downloads
 .. _Laptop-DSDT-Patch: https://github.com/RehabMan/Laptop-DSDT-Patch
 .. _toleda's thread: http://www.tonymacx86.com/audio/58368-guide-how-make-copy-ioreg.html
-.. _Ludacrisvp's t440s guide: http://www.tonymacx86.com/yosemite-laptop-guides/158369-guide-lenovo-t440s-clover-uefi.html
+.. _XDleader555's post: http://www.tonymacx86.com/el-capitan-laptop-guides/175935-guide-lenovo-t430-el-capitan-10.html#post1143932
+.. _ACPI Specification Revision 5.0a: http://www.acpi.info/spec50a.htm
 .. _AppleBacklight and AppleBacklightInjector: http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
 .. _RehabMan's ACPIBatteryManager.kext: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
 .. _battery status guide: http://www.tonymacx86.com/yosemite-laptop-support/116102-guide-how-patch-dsdt-working-battery-status.html

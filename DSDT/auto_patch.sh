@@ -12,7 +12,7 @@ askyes(){
 }
 
 # find iasl 5
-IASL=$(find /Applications |grep -i MaciASL.app/Contents/MacOS/iasl5)
+IASL=$(find /Applications/MaciASL.app/Contents -name iasl5)
 if [ x$IASL == x ]; then
     echo "iasl not found. Please install MaciASL to /Applications."
     exit 1

@@ -100,5 +100,3 @@ into device label EC code_regex (SBDN,)\s+(128) replace_matched begin BDNX,%2,//
 into method label GBIF code_regex \(SBMN, replaceall_matched begin (RECB(0xA0,128), end;
 into method label GBIF code_regex \(SBDN, replaceall_matched begin (RECB(0xA0,128), end;
 
-# 2 remove dumb code from \_WAK
-into method label \_WAK code_regex If.*LOr.*Equal.*Arg0.*LGreaterEqual.*Arg0.*0x05.*\n.*\{\n.*Return.*WAKI.*\n.*\} remove_matched;
