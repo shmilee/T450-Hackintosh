@@ -16,6 +16,10 @@
 # SBMD,   16, SBCC,   16
 # SBOM,   16, SBSI,   16, SBDT,   16,
 
+# Note: disable secondary battery
+#  *** uncomment this line if you have only one battery installed)
+#into method label _STA parent_label BAT1 replace_content begin Return(0) end;
+
 # 1.1 deal with 16-bit
 into method label B1B2 remove_entry;
 into definitionblock code_regex . insert

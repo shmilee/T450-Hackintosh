@@ -377,6 +377,13 @@ DSDT Battery Status
 Download `RehabMan's ACPIBatteryManager.kext`_, install the kext to EFI/Clover/kexts/Other/.
 
 Use the battery patch: ``./DSDT/patch-files/4_battery_Lenovo-T450.txt``.
+
+If you have only one battery, please uncomment this line in the patch:
+
+.. code:: bash
+
+    into method label _STA parent_label BAT1 replace_content begin Return(0) end;
+
 Save the result named as ``patched_4_DSDT.dsl`` and ``patched_4_DSDT.aml``.
 Test it.
 
