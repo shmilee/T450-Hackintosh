@@ -103,6 +103,17 @@ According to the logo icns of theme MavericksLogin, make a new png os_cap.png fr
 Upload os_cap.png to http://www.easyicon.net/language.en/covert/, and save as ``os_cap.icns``.
 Copy it to the themes directory.
 
+BIOS Setting
+------------
+
+See `jcsnider's guide`_.
+
+Some difference here:
+
+* USB 3.0 Mode, Enabled, because I will restore the install image to disk partition ``/dev/sda8``.
+* Security > Virtualization, Both Enabled, because the config.plist below will include ``dart=0`` in boot arguments.
+* Startup > CSM Support Yes, reduce boot screen garble.
+
 Config for T450
 ---------------
 
@@ -427,8 +438,8 @@ Remap Home/End keys
 
 Run the script ``./HomeEndFix/install.sh``.
 
-Use patched AppleHDA
----------------------
+Optional: Use patched AppleHDA
+------------------------------
 
 First, remove the VoodooHDA in EFI/Clover/kexts/Other.
 
@@ -450,6 +461,13 @@ Enter the directory DSDT.
     # copy result/patched_5_DSDT.aml to EFI/Clover/ACPI/Patched/DSDT.aml
 
 Reboot, and check.
+
+Optional: Use RehabMan's FakeSMC
+--------------------------------
+
+The default FakeSMC in clover doesn't support CPU,GPU Sensor plugins for T450.
+So if you want to use them with HWMonitor, just look at `RehabMan's version`_ forked from kozlek.
+It works fine in my T450.
 
 Applications
 ============
@@ -559,5 +577,6 @@ oh-my-zsh
 .. _AppleBacklight and AppleBacklightInjector: http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
 .. _RehabMan's ACPIBatteryManager.kext: https://github.com/RehabMan/OS-X-ACPI-Battery-Driver
 .. _battery status guide: http://www.tonymacx86.com/yosemite-laptop-support/116102-guide-how-patch-dsdt-working-battery-status.html
+.. _RehabMan's version: https://github.com/RehabMan/OS-X-FakeSMC-kozlek
 
 .. [1] http://www.tonymacx86.com/yosemite-laptop-support/152573-guide-patching-laptop-dsdt-ssdts.html
