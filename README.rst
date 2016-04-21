@@ -76,7 +76,7 @@ In Archlinux, mount Clover-\*-X64.iso, and mount `ESP` on `/boot`, then copy fil
         -exec install -D {} /boot/EFI/Clover/{} \;
     # drivers
     cd <Download dir>/
-    install HFSPlus.efi /boot/EFI/Clover/drivers64UEFI/HFSPlus-64.efi
+    install HFSPlus.efi /boot/EFI/Clover/drivers64UEFI/HFSPlus.efi
     rm /boot/EFI/Clover/drivers64UEFI/VBoxHfs-64.efi
     mv /boot/EFI/Clover/{drivers-Off/,}drivers64UEFI/OsxAptioFix2Drv-64.efi
     # themes
