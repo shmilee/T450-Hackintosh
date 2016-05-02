@@ -22,8 +22,8 @@ all: kext
 
 install: kext
 	sudo rm -rf /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
-	sudo cp -r /tmp/CodecCommander/$(CCver)/CodecCommander.kext /Library/Extensions/
-	sudo cp -r ./AppleHDAALC3232.kext /Library/Extensions/AppleHDAALC3232.kext
+	sudo cp -R  /tmp/CodecCommander/$(CCver)/CodecCommander.kext /Library/Extensions/
+	sudo cp -R  ./AppleHDAALC3232.kext /Library/Extensions/AppleHDAALC3232.kext
 	sudo chown -R root:wheel /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
 	@echo "==> Please Use Kext Utility to Repair Permissions and Updating the system cache."
 	@#sudo chmod -R 755 /Library/Extensions/{AppleHDAALC3232.kext,CodecCommander.kext}
