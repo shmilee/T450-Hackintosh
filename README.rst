@@ -572,6 +572,7 @@ oh-my-zsh
 .. _os-x-maciasl-patchmatic: https://bitbucket.org/RehabMan/os-x-maciasl-patchmatic/downloads
 .. _Laptop-DSDT-Patch: https://github.com/RehabMan/Laptop-DSDT-Patch
 .. _toleda's thread: http://www.tonymacx86.com/audio/58368-guide-how-make-copy-ioreg.html
+.. _Ludacrisvp's t440s guide: http://www.tonymacx86.com/yosemite-laptop-guides/158369-guide-lenovo-t440s-clover-uefi.html
 .. _XDleader555's post: http://www.tonymacx86.com/el-capitan-laptop-guides/175935-guide-lenovo-t430-el-capitan-10.html#post1143932
 .. _ACPI Specification Revision 5.0a: http://www.acpi.info/spec50a.htm
 .. _AppleBacklight and AppleBacklightInjector: http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
